@@ -69,7 +69,7 @@ class KNearestNeighbor(object):
       for j in xrange(num_train):
         #####################################################################
         # TODO:                                                             #
-        # Compute the l2 distance between the ith test point and the jth    #
+        # Compute the L-2 distance between the ith test point and the jth    #
         # training point, and store the result in dists[i, j]. You should   #
         # not use a loop over dimension.                                    #
         #####################################################################
@@ -93,10 +93,10 @@ class KNearestNeighbor(object):
     for i in xrange(num_test):
       #######################################################################
       # TODO:                                                               #
-      # Compute the l2 distance between the ith test point and all training #
+      # Compute the L-2 distance between the ith test point and all training #
       # points, and store the result in dists[i, :].                        #
       #######################################################################
-      dists[i:] = np.sqrt(np.sum((X[i]-self.X_train[:])**2))
+      dists[i,:] = np.sqrt(np.sum((X[i]-self.X_train[:])**2))
       #######################################################################
       #                         END OF YOUR CODE                            #
       #######################################################################
@@ -114,14 +114,14 @@ class KNearestNeighbor(object):
     dists = np.zeros((num_test, num_train)) 
     #########################################################################
     # TODO:                                                                 #
-    # Compute the l2 distance between all test points and all training      #
+    # Compute the L-2 distance between all test points and all training      #
     # points without using any explicit loops, and store the result in      #
     # dists.                                                                #
     #                                                                       #
     # You should implement this function using only basic array operations; #
     # in particular you should not use functions from scipy.                #
     #                                                                       #
-    # HINT: Try to formulate the l2 distance using matrix multiplication    #
+    # HINT: Try to formulate the L-2 distance using matrix multiplication    #
     #       and two broadcast sums.                                         #
     #########################################################################
     pass
