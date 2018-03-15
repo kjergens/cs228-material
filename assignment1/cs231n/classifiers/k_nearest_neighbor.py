@@ -157,7 +157,7 @@ class KNearestNeighbor(object):
       # Hint: Look up the function numpy.argsort.                             #
       #########################################################################
       # argsort to make a mask. truncate to top k spots.
-      closest_y = self.y_train[np.argsort(dists[0])[i]]
+      closest_y = self.y_train[np.argsort(dists[0])[i]] # need to find 0-k, not just 0
       #########################################################################
       # TODO:                                                                 #
       # Now that you have found the labels of the k nearest neighbors, you    #
@@ -165,11 +165,11 @@ class KNearestNeighbor(object):
       # Store this label in y_pred[i]. Break ties by choosing the smaller     #
       # label.                                                                #
       #########################################################################
-      y_pred[i] = closest_y
+      y_pred[i] = closest_y # need to find most common in the list closest_y
       
       #########################################################################
       #                           END OF YOUR CODE                            # 
       #########################################################################
-    print(y_pred)
+    print(y_pred) # testing
     return y_pred
 
