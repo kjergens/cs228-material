@@ -73,8 +73,7 @@ class KNearestNeighbor(object):
         # training point, and store the result in dists[i, j]. You should   #
         # not use a loop over dimension.                                    #
         #####################################################################
-        diff = (X[i]-self.X_train[j])
-        dists[i,j] = np.sqrt(np.sum(diff**2))
+        dists[i,j] = np.sqrt(np.sum((X[i]-self.X_train[j])**2))
         #####################################################################
         #                       END OF YOUR CODE                            #
         #####################################################################
@@ -96,7 +95,8 @@ class KNearestNeighbor(object):
       # Compute the L-2 distance between the ith test point and all training #
       # points, and store the result in dists[i, :].                        #
       #######################################################################
-      dists[i,:] = np.sqrt(np.sum((X[i]-self.X_train[:])**2))
+      diff = X[i] - self.X_train
+      dists[i,:] = np.sqrt(np.sum(diff**2, axis=1))
       #######################################################################
       #                         END OF YOUR CODE                            #
       #######################################################################
@@ -124,7 +124,10 @@ class KNearestNeighbor(object):
     # HINT: Try to formulate the L-2 distance using matrix multiplication    #
     #       and two broadcast sums.                                         #
     #########################################################################
-    pass
+    x2 = np.sum(X**2, axis=1).reshape((num_test, 1))
+    y2 = np.sum(self.X_train**2, axis=1).reshape((1, num_train))
+    xy = X.dot(self.X_train.T) # shape is (numtest, numtrain)
+    dists = np.sqrt(x2 + y2 - 2*xy) # shape is (numtest, numtrain)
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -154,9 +157,12 @@ class KNearestNeighbor(object):
       # Use the distance matrix to find the k nearest neighbors of the ith    #
       # testing point, and use self.y_train to find the labels of these       #
       # neighbors. Store these labels in closest_y.                           #
-      # Hint: Look up the function numpy.argsort.                             #
+      # Hint: Look up the function numpy.argsort.    
+      # np.argsort(dists)
+      # closest_y= self.train_y[np.argsort(dists)] # get top k of this
+      # get most freq occurrance in closest_y
       #########################################################################
-      pass
+      closest_y = self.y_train[np.argsort(dists[i])][0:k]
       #########################################################################
       # TODO:                                                                 #
       # Now that you have found the labels of the k nearest neighbors, you    #
@@ -164,7 +170,23 @@ class KNearestNeighbor(object):
       # Store this label in y_pred[i]. Break ties by choosing the smaller     #
       # label.                                                                #
       #########################################################################
-      pass
+      y_pred[i] = np.argmax(np.bincount(closest_y))
+      #sorted_cy = list(closest_y[np.argsort(closest_y[0:k])])
+      #most_freq_count = 0
+      #most_freq = sorted_cy[0]
+      #for x in range(k):   # from 1 - k
+      #  count = 0    # start a new counter
+      #  tester = sorted_cy[x] # start a new tester
+      #  while x < len(sorted_cy) and sorted_cy[x] == tester:   # while sc[x] is the tester
+      #      count = count + 1
+      #      x = x + 1
+      #  if count > most_freq_count:   # if the count is max save it
+      #      most_freq_count = count
+      #      most_freq = tester
+            #print("Most freq so far: ", tester, " with count ", count)
+            
+      #print()
+      #y_pred[i] = most_freq # this should be the most freq in closest_y
       #########################################################################
       #                           END OF YOUR CODE                            # 
       #########################################################################
