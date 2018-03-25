@@ -171,25 +171,8 @@ class KNearestNeighbor(object):
       # label.                                                                #
       #########################################################################
       y_pred[i] = np.argmax(np.bincount(closest_y))
-      #sorted_cy = list(closest_y[np.argsort(closest_y[0:k])])
-      #most_freq_count = 0
-      #most_freq = sorted_cy[0]
-      #for x in range(k):   # from 1 - k
-      #  count = 0    # start a new counter
-      #  tester = sorted_cy[x] # start a new tester
-      #  while x < len(sorted_cy) and sorted_cy[x] == tester:   # while sc[x] is the tester
-      #      count = count + 1
-      #      x = x + 1
-      #  if count > most_freq_count:   # if the count is max save it
-      #      most_freq_count = count
-      #      most_freq = tester
-            #print("Most freq so far: ", tester, " with count ", count)
-            
-      #print()
-      #y_pred[i] = most_freq # this should be the most freq in closest_y
       #########################################################################
       #                           END OF YOUR CODE                            # 
       #########################################################################
-    print(y_pred) # testing
     return y_pred
 
